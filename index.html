@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1419">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="assets/icon-192x192.png">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    connect-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: blob:;
+    worker-src 'self' blob:;
+  ">
+  <meta name="description" content="EcomWorkbench — 跨境电商运营数据工作台">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon-192x192.png">
+  <title>EcomWorkbench</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <div id="app">
+
+    <header id="top-bar">
+      <span id="top-title">EcomWorkbench</span>
+      <span id="top-actions">
+        <button class="btn-icon" id="btn-refresh" title="刷新数据" style="font-size:16px">⟳</button>
+      </span>
+    </header>
+
+    <main id="main-content">
+      <!-- 总控台 -->
+      <section id="tab-dashboard" class="tab-page active">
+        <div class="page-header"><h2>🏠 总控台</h2><div class="sub">每天先看这里：5 个决策问题</div></div>
+        <div class="page-body" id="dash-content"></div>
+      </section>
+
+      <!-- 选品 -->
+      <section id="tab-selection" class="tab-page">
+        <div class="page-header"><h2>🎯 选品</h2><div class="sub">SKU 主数据 + 竞品分析</div></div>
+        <div id="selection-content"></div>
+      </section>
+
+      <!-- 录入 -->
+      <section id="tab-entry" class="tab-page">
+        <div class="page-header"><h2>➕ 录入</h2><div class="sub">日跟踪 / 回款 / 待办</div></div>
+        <div id="entry-content"></div>
+      </section>
+
+      <!-- 财务 -->
+      <section id="tab-finance" class="tab-page">
+        <div class="page-header"><h2>💰 财务</h2><div class="sub">定价测算 + 回款</div></div>
+        <div id="finance-content"></div>
+      </section>
+
+      <!-- 更多 -->
+      <section id="tab-more" class="tab-page">
+        <div class="page-header"><h2>⚙️ 更多</h2><div class="sub">供应商 / 达人 / SOP / 备份</div></div>
+        <div id="more-content"></div>
+      </section>
+    </main>
+
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-tab="dashboard">🏠<span>总控台</span></button>
+      <button class="nav-btn" data-tab="selection">🎯<span>选品</span></button>
+      <button class="nav-btn" data-tab="entry">➕<span>录入</span></button>
+      <button class="nav-btn" data-tab="finance">💰<span>财务</span></button>
+      <button class="nav-btn" data-tab="more">⚙️<span>更多</span></button>
+    </nav>
+
+  </div>
+
+  <div id="toast-container"></div>
+
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box"></div>
+  </div>
+
+  <script type="module" src="js/ui/app.js"></script>
+
+</body>
+</html>
