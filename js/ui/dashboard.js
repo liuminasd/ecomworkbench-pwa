@@ -80,7 +80,7 @@ function q1(state) {
   if (!rows.length) return empty('暂无高分候选。录入 SKU 并打分后这里会出现。');
   return `<table><thead><tr><th>SKU</th><th>评分</th><th>状态</th><th>下一步</th></tr></thead><tbody>
     ${rows.map(s => `<tr><td>${esc(s.名称 || s.sku_id)}<div class="text-muted" style="font-size:11px">${esc(s.sku_id)}</div></td>
-      <td>${s.评分}</td><td>${statusBadge(s.状态, 'sku')}</td>
+      <td>${esc(s.评分)}</td><td>${statusBadge(s.状态, 'sku')}</td>
       <td>${s.状态 === '候选' ? '<span class="text-warning">⚠ 评分够但还没动</span>' : '<span class="text-success">已进入流程</span>'}</td></tr>`).join('')}
   </tbody></table>`;
 }

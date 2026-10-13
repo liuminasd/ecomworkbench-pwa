@@ -38,8 +38,11 @@ function formShell(title, fieldsHtml, saveFn) {
       <button type="submit" class="btn btn-primary">保存</button>
     </div></form>`);
   document.getElementById('btn-form-cancel').onclick = closeModal;
-  document.getElementById('entity-form').onsubmit = (e) => { e.preventDefault(); saveFn(); };
-  injectSkuOptions(); // 填充 sku_id 下拉（如有）
+  document.getElementById('entity-form').onsubmit = (e) => {
+    e.preventDefault();
+    Promise.resolve(saveFn()).catch(err => toast('保存失败：' + (err?.message || ''), 'error'));
+  };
+  injectSkuOptions().catch(err => console.warn('SKU 下拉加载失败', err)); // 填充 sku_id 下拉（如有）
 }
 
 /** 读取表单所有命名字段 */
@@ -47,7 +50,9 @@ function readForm() {
   const obj = {};
   document.querySelectorAll('#entity-form [name]').forEach(el => {
     if (el.type === 'checkbox') { obj[el.name] = el.checked; return; }
-    obj[el.name] = el.value;
+    const v = el.value;
+    // 文本类字段 trim，避免 sku_id/名称带空格导致关联静默失败
+    obj[el.name] = (el.type === 'number') ? v : (typeof v === 'string' ? v.trim() : v);
   });
   return obj;
 }

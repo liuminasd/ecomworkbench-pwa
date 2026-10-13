@@ -19,7 +19,8 @@ const Pricing = {
     const 广告率 = (Number(p.广告占比) || 0) / 100;
     const 退货率 = (Number(p.退货率) || 0) / 100;
     const 汇损率 = (Number(p.支付汇损率) || 0) / 100;
-    const 目标净利 = (Number(p.目标净利率) || 30) / 100;
+    const 目标净利率v = p.目标净利率;
+    const 目标净利 = (目标净利率v === '' || 目标净利率v == null || Number.isNaN(Number(目标净利率v))) ? 0.3 : Number(目标净利率v) / 100;
 
     const 固本 = 采购价 + 头程 + 尾程;
     const 有效固本 = 固本 * (1 + 退货率);

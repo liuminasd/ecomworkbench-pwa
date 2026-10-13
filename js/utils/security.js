@@ -8,9 +8,10 @@ const Security = {
    */
   escapeHtml(str) {
     if (str === null || str === undefined) return '';
-    const div = document.createElement('div');
-    div.textContent = String(str);
-    return div.innerHTML;
+    // 手动转义全部 HTML 特殊字符（含引号），属性上下文（value/data-*）也安全
+    return String(str).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
   },
 
   /**
@@ -50,7 +51,7 @@ const Security = {
    */
   money(v) {
     const n = Number(v);
-    if (Number.isNaN(n)) return '—';
+    if (!Number.isFinite(n)) return '—';
     return '¥' + n.toFixed(2);
   },
 

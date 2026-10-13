@@ -100,9 +100,14 @@ class Store {
     });
   }
 
+  _db() {
+    if (!this.db) throw new Error('数据库未就绪');
+    return this.db;
+  }
+
   async add(storeName, item) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readwrite');
+      const tx = this._db().transaction(storeName, 'readwrite');
       const store = tx.objectStore(storeName);
       const request = store.add(item);
       request.onsuccess = () => resolve(item);
@@ -112,7 +117,7 @@ class Store {
 
   async put(storeName, item) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readwrite');
+      const tx = this._db().transaction(storeName, 'readwrite');
       const store = tx.objectStore(storeName);
       const request = store.put(item);
       request.onsuccess = () => resolve(item);
@@ -122,7 +127,7 @@ class Store {
 
   async get(storeName, id) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readonly');
+      const tx = this._db().transaction(storeName, 'readonly');
       const store = tx.objectStore(storeName);
       const request = store.get(id);
       request.onsuccess = () => resolve(request.result);
@@ -132,7 +137,7 @@ class Store {
 
   async getAll(storeName, indexName, direction = 'next') {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readonly');
+      const tx = this._db().transaction(storeName, 'readonly');
       const store = tx.objectStore(storeName);
       const index = indexName ? store.index(indexName) : null;
       const results = [];
@@ -148,7 +153,7 @@ class Store {
 
   async getByIndex(storeName, indexName, value) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readonly');
+      const tx = this._db().transaction(storeName, 'readonly');
       const store = tx.objectStore(storeName);
       const index = store.index(indexName);
       const results = [];
@@ -164,7 +169,7 @@ class Store {
 
   async delete(storeName, id) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readwrite');
+      const tx = this._db().transaction(storeName, 'readwrite');
       const store = tx.objectStore(storeName);
       const request = store.delete(id);
       request.onsuccess = () => resolve();
@@ -174,7 +179,7 @@ class Store {
 
   async clear(storeName) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readwrite');
+      const tx = this._db().transaction(storeName, 'readwrite');
       const store = tx.objectStore(storeName);
       const request = store.clear();
       request.onsuccess = () => resolve();
@@ -184,7 +189,7 @@ class Store {
 
   async execInTransaction(storeNames, callback) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeNames, 'readwrite');
+      const tx = this._db().transaction(storeNames, 'readwrite');
       const stores = {};
       for (const name of storeNames) stores[name] = tx.objectStore(name);
       tx.oncomplete = () => resolve();
@@ -196,7 +201,7 @@ class Store {
 
   async count(storeName) {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(storeName, 'readonly');
+      const tx = this._db().transaction(storeName, 'readonly');
       const store = tx.objectStore(storeName);
       const request = store.count();
       request.onsuccess = () => resolve(request.result);
