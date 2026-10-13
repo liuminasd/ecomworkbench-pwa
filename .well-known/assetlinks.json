@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.ecomworkbench.app",
+      "sha256_cert_fingerprints": [
+        "D4:74:96:A8:57:B7:EE:C2:0D:32:FB:01:A4:E8:74:DE:26:1A:73:D4:AF:BE:B4:39:99:35:12:7C:8E:58:79:97"
+      ]
+    }
+  }
+]
